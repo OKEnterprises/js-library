@@ -45,6 +45,16 @@ function renderLibrary(library) {
 
     let read = document.createElement("td");
     read.textContent = book.read;
+    let toggleBtn = document.createElement("button");
+    toggleBtn.value = "Toggle";
+    toggleBtn.addEventListener('click', () => {
+        if (read.textContent === "Read") {
+            read.textContent = "Unread";
+        } else {
+            read.textContent = "Read";
+        }
+    });
+    read.appendChild(toggleBtn);
     row.appendChild(read);
 
     let delCell = document.createElement("td");
