@@ -38,3 +38,52 @@ function renderLibrary(library) {
         table.appendChild(row);
     });
 }
+
+function newBookForm() {
+    let formDiv = document.querySelector('#form-div');
+
+    let title = document.createElement('input');
+    title.type = "text";
+    title.id = "title";
+    title.name = "title";
+
+    let titleLabel = document.createElement('lable');
+    titleLabel.for = "title";
+    titleLabel.textContent = "Title:";
+
+    let author = document.createElement('input');
+    author.type = "text";
+    author.id = "author";
+    author.name = "author"
+
+    let authorLabel = document.createElement('label');
+    authorLabel.for = "author";
+    authorLabel.textContent = "Author:";
+
+    let pages = document.createElement('input');
+    pages.type = "number";
+    pages.id = "pages";
+    pages.name = "pages";
+
+    let pagesLabel = document.createElement('label');
+    pagesLabel.for = "pages";
+    pagesLabel.textContent = "Pages:";
+
+    let read = document.createElement('input');
+    read.type = "checkbox";
+    read.id = "read";
+    read.name = "read";
+
+    let readLabel = document.createElement('input');
+    readLabel.for = "read";
+    readLabel.textContent = "Read:";
+
+    formDiv.appendChild(titleLabel);
+    formDiv.appendChild(title);
+    formDiv.appendChild(authorLabel);
+    formDiv.appendChild(author);
+    formDiv.appendChild(pagesLabel);
+    formDiv.appendChild(pages);
+    formDiv.appendChild(readLabel);
+    formDiv.appendChild(read);
+}
