@@ -45,7 +45,7 @@ function renderLibrary(library) {
 
     let read = document.createElement("td");
     read.textContent = book.read;
-    row.appendChild(pages);
+    row.appendChild(read);
 
     let delCell = document.createElement("td");
 
@@ -150,6 +150,7 @@ function newBookForm() {
   formDiv.appendChild(form);
 
   submit.addEventListener("click", (event) => {
+    console.log(form.elements.pages.value);
     addBookToLibrary(form.elements.title.value, form.elements.author.value, form.elements.pages.value, form.elements.read.value);
     clearForm();
     clearTable();
