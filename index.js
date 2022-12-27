@@ -14,6 +14,14 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(title, author, pages, read) {
   let book = new Book(title, author, pages, read);
   myLibrary.push(book);
+  console.log(book);
+}
+
+function clearTable() {
+  let table = document.querySelector('#lib-tab');
+  let fstRow = table.firstChild;
+  let sndRow = table.childNodes[1];
+  table.replaceChildren(fstRow, sndRow);
 }
 
 function renderLibrary(library) {
@@ -105,7 +113,9 @@ function newBookForm() {
   formDiv.appendChild(form);
 
   submit.addEventListener("click", (event) => {
+
     let readCheck = form.elements.read.value;
+    console.log(readCheck);
     let read;
 
     if (readCheck === "on") {
@@ -116,6 +126,7 @@ function newBookForm() {
 
     addBookToLibrary(form.elements.title.value, form.elements.author.value, form.elements.pages.value, read);
     clearForm();
+    clearTable();
     renderLibrary(myLibrary);
     event.preventDefault();
   });
