@@ -7,7 +7,7 @@ function Book(title, author, pages, read) {
   this.read = read;
 
   this.info = function() {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? 'read' : 'unread'}`;
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
   }
 }
 
@@ -27,8 +27,9 @@ function clearTable() {
 function renderLibrary(library) {
   let table = document.querySelector("#lib-tab");
 
-  library.forEach((book) => {
+  library.forEach((book, index) => {
     let row = document.createElement("tr");
+    row.dataset.index = index;
 
     let title = document.createElement("td");
     title.textContent = book.title;
@@ -45,6 +46,21 @@ function renderLibrary(library) {
     let read = document.createElement("td");
     read.textContent = book.read;
     row.appendChild(pages);
+
+    let delCell = document.createElement("td");
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener('click', () => {
+        let index = row.dataset.index;
+        myLibrary.splice(index, 1);
+        clearTable();
+        renderLibrary(myLibrary);
+    });
+
+    delCell.appendChild(deleteBtn);
+
+    row.appendChild(delCell);
 
     table.appendChild(row);
   });
@@ -65,6 +81,7 @@ function newBookForm() {
   title.type = "text";
   title.id = "title";
   title.name = "title";
+  title.minLength = 1;
 
   let titleLabel = document.createElement("lable");
   titleLabel.for = "title";
@@ -74,6 +91,7 @@ function newBookForm() {
   author.type = "text";
   author.id = "author";
   author.name = "author";
+  author.minLength = "1";
 
   let authorLabel = document.createElement("label");
   authorLabel.for = "author";
@@ -83,19 +101,39 @@ function newBookForm() {
   pages.type = "number";
   pages.id = "pages";
   pages.name = "pages";
+  pages.min = "1";
 
   let pagesLabel = document.createElement("label");
   pagesLabel.for = "pages";
   pagesLabel.textContent = "Pages:";
 
-  let read = document.createElement("input");
-  read.type = "checkbox";
-  read.id = "read";
-  read.name = "read";
+  let radioDiv = document.createElement('div');
+  radioDiv.classList.add('radio-div');
+
+  let readRadio = document.createElement("input");
+  readRadio.type = "radio";
+  readRadio.id = "read";
+  readRadio.name = "read";
+  readRadio.value = "Read";
 
   let readLabel = document.createElement("label");
   readLabel.for = "read";
-  readLabel.textContent = "Read:";
+  readLabel.textContent = "Read";
+
+  let unreadRadio = document.createElement("input");
+  unreadRadio.type = "radio";
+  unreadRadio.id = "unread";
+  unreadRadio.name = "read";
+  unreadRadio.value = "Unread";
+
+  let unreadLabel = document.createElement('label');
+  unreadLabel.for = "unread";
+  unreadLabel.textContent = "Unread";
+
+  radioDiv.appendChild(readRadio);
+  radioDiv.appendChild(readLabel);
+  radioDiv.appendChild(unreadRadio);
+  radioDiv.appendChild(unreadLabel);
 
   let submit = document.createElement("input");
   submit.type = "submit";
@@ -106,25 +144,13 @@ function newBookForm() {
   form.appendChild(author);
   form.appendChild(pagesLabel);
   form.appendChild(pages);
-  form.appendChild(readLabel);
-  form.appendChild(read);
+  form.appendChild(radioDiv);
   form.appendChild(submit);
 
   formDiv.appendChild(form);
 
   submit.addEventListener("click", (event) => {
-
-    let readCheck = form.elements.read.value;
-    console.log(readCheck);
-    let read;
-
-    if (readCheck === "on") {
-        read = "Y";
-    } else {
-        read = "N";
-    }
-
-    addBookToLibrary(form.elements.title.value, form.elements.author.value, form.elements.pages.value, read);
+    addBookToLibrary(form.elements.title.value, form.elements.author.value, form.elements.pages.value, form.elements.read.value);
     clearForm();
     clearTable();
     renderLibrary(myLibrary);

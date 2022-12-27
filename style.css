@@ -10,3 +10,8 @@ input {
 button {
     width: 6em;
 }
+
+.radio-div {
+    display: flex;
+    flex-direction: column;
+}
