@@ -46,6 +46,7 @@ function renderLibrary(library) {
     let read = document.createElement("td");
     read.textContent = book.read;
     let toggleBtn = document.createElement("button");
+    toggleBtn.textContent = "Toggle";
     toggleBtn.value = "Toggle";
     toggleBtn.addEventListener('click', () => {
         if (read.textContent === "Read") {
@@ -53,6 +54,7 @@ function renderLibrary(library) {
         } else {
             read.textContent = "Read";
         }
+        read.appendChild(toggleBtn);
     });
     read.appendChild(toggleBtn);
     row.appendChild(read);
