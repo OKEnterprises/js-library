@@ -1,89 +1,115 @@
 let myLibrary = [];
 
-class Book {
-    constructor(title, author, pages, read) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.read = read;
-    }
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
 }
 
 function addBookToLibrary(title, author, pages, read) {
-    let book = new Book(title, author, pages, read);
-    myLibrary.push(book);
+  let book = new Book(title, author, pages, read);
+  myLibrary.push(book);
 }
 
 function renderLibrary(library) {
-    let table = document.querySelector('#lib-tab');
-    library.forEach(book => {
-        let row = document.createElement('tr');
+  let table = document.querySelector("#lib-tab");
 
-        let title = document.createElement('td');
-        title.textContent = book.title;
-        row.appendChild(title);
+  library.forEach((book) => {
+    let row = document.createElement("tr");
 
-        let author = document.createElement('td');
-        author.textContent = book.author;
-        row.appendChild(author);
+    let title = document.createElement("td");
+    title.textContent = book.title;
+    row.appendChild(title);
 
-        let pages = document.createElement('td');
-        pages.textContent = book.pages;
-        row.appendChild(pages);
+    let author = document.createElement("td");
+    author.textContent = book.author;
+    row.appendChild(author);
 
-        let read = document.createElement('td');
-        read.textContent = book.read;
-        row.appendChild(pages);
+    let pages = document.createElement("td");
+    pages.textContent = book.pages;
+    row.appendChild(pages);
 
-        table.appendChild(row);
-    });
+    let read = document.createElement("td");
+    read.textContent = book.read;
+    row.appendChild(pages);
+  });
+
+  table.appendChild(row);
+}
+
+function clearForm() {
+  formDiv = document.querySelector("#add-form");
+  formDiv.replaceChildren();
 }
 
 function newBookForm() {
-    let formDiv = document.querySelector('#form-div');
+  let formDiv = document.querySelector("#add-form");
 
-    let title = document.createElement('input');
-    title.type = "text";
-    title.id = "title";
-    title.name = "title";
+  let form = document.createElement('form');
+  form.classList.add("book-form");
 
-    let titleLabel = document.createElement('lable');
-    titleLabel.for = "title";
-    titleLabel.textContent = "Title:";
+  let title = document.createElement("input");
+  title.type = "text";
+  title.id = "title";
+  title.name = "title";
 
-    let author = document.createElement('input');
-    author.type = "text";
-    author.id = "author";
-    author.name = "author"
+  let titleLabel = document.createElement("lable");
+  titleLabel.for = "title";
+  titleLabel.textContent = "Title:";
 
-    let authorLabel = document.createElement('label');
-    authorLabel.for = "author";
-    authorLabel.textContent = "Author:";
+  let author = document.createElement("input");
+  author.type = "text";
+  author.id = "author";
+  author.name = "author";
 
-    let pages = document.createElement('input');
-    pages.type = "number";
-    pages.id = "pages";
-    pages.name = "pages";
+  let authorLabel = document.createElement("label");
+  authorLabel.for = "author";
+  authorLabel.textContent = "Author:";
 
-    let pagesLabel = document.createElement('label');
-    pagesLabel.for = "pages";
-    pagesLabel.textContent = "Pages:";
+  let pages = document.createElement("input");
+  pages.type = "number";
+  pages.id = "pages";
+  pages.name = "pages";
 
-    let read = document.createElement('input');
-    read.type = "checkbox";
-    read.id = "read";
-    read.name = "read";
+  let pagesLabel = document.createElement("label");
+  pagesLabel.for = "pages";
+  pagesLabel.textContent = "Pages:";
 
-    let readLabel = document.createElement('input');
-    readLabel.for = "read";
-    readLabel.textContent = "Read:";
+  let read = document.createElement("input");
+  read.type = "checkbox";
+  read.id = "read";
+  read.name = "read";
 
-    formDiv.appendChild(titleLabel);
-    formDiv.appendChild(title);
-    formDiv.appendChild(authorLabel);
-    formDiv.appendChild(author);
-    formDiv.appendChild(pagesLabel);
-    formDiv.appendChild(pages);
-    formDiv.appendChild(readLabel);
-    formDiv.appendChild(read);
+  let readLabel = document.createElement("label");
+  readLabel.for = "read";
+  readLabel.textContent = "Read:";
+
+  let submit = document.createElement("input");
+  submit.type = "submit";
+
+  form.appendChild(titleLabel);
+  form.appendChild(title);
+  form.appendChild(authorLabel);
+  form.appendChild(author);
+  form.appendChild(pagesLabel);
+  form.appendChild(pages);
+  form.appendChild(readLabel);
+  form.appendChild(read);
+  form.appendChild(submit);
+
+  formDiv.appendChild(form);
+
+  submit.addEventListener("click", (event) => {
+    console.log(event);
+    addBookToLibrary(form.elements.title, form.elements.author, form.elements.pages, form.elements.read);
+    clearForm();
+    renderLibrary(myLibrary);
+    event.preventDefault();
+  });
 }
+
+let newBook = document.querySelector("#new-book");
+newBook.addEventListener("click", () => {
+  newBookForm();
+});
