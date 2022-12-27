@@ -1,10 +1,14 @@
 let myLibrary = [];
 
 function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+
+  this.info = function() {
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? 'read' : 'unread'}`;
+  }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -33,9 +37,9 @@ function renderLibrary(library) {
     let read = document.createElement("td");
     read.textContent = book.read;
     row.appendChild(pages);
-  });
 
-  table.appendChild(row);
+    table.appendChild(row);
+  });
 }
 
 function clearForm() {
@@ -101,8 +105,16 @@ function newBookForm() {
   formDiv.appendChild(form);
 
   submit.addEventListener("click", (event) => {
-    console.log(event);
-    addBookToLibrary(form.elements.title, form.elements.author, form.elements.pages, form.elements.read);
+    let readCheck = form.elements.read.value;
+    let read;
+
+    if (readCheck === "on") {
+        read = "Y";
+    } else {
+        read = "N";
+    }
+
+    addBookToLibrary(form.elements.title.value, form.elements.author.value, form.elements.pages.value, read);
     clearForm();
     renderLibrary(myLibrary);
     event.preventDefault();
