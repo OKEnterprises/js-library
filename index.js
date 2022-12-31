@@ -1,13 +1,23 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
 
-  this.info = function() {
+  info() {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+  }
+
+  toggleRead() {
+    if (this.read === "Read") {
+      this.read = "Unread";
+    } else {
+      this.read = "Read";
+    }
   }
 }
 
@@ -45,17 +55,17 @@ function renderLibrary(library) {
 
     let read = document.createElement("td");
     read.textContent = book.read;
+
     let toggleBtn = document.createElement("button");
     toggleBtn.textContent = "Toggle";
     toggleBtn.value = "Toggle";
+
     toggleBtn.addEventListener('click', () => {
-        if (read.textContent === "Read") {
-            read.textContent = "Unread";
-        } else {
-            read.textContent = "Read";
-        }
-        read.appendChild(toggleBtn);
+      book.toggleRead();
+      read.textContent = book.read;
+      read.appendChild(toggleBtn);
     });
+
     read.appendChild(toggleBtn);
     row.appendChild(read);
 
